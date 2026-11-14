@@ -1,492 +1,427 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard · Yo Go! Admin</title>
+    <meta
+      name="description"
+      content="Yo Go! admin dashboard: active users per platform, revenue and key performance indicators at a glance."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f6fa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1220" media="(prefers-color-scheme: dark)" />
 
-    <link rel="stylesheet" href="./global.css" />
-    <link rel="stylesheet" href="./index.css" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Yo Go! Admin Dashboard" />
+    <meta
+      property="og:description"
+      content="Active users per platform, revenue and key performance indicators at a glance."
+    />
+    <meta property="og:image" content="./public/icon-512.png" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./public/favicon-32.png" />
+    <link rel="apple-touch-icon" href="./public/apple-touch-icon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap"
     />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Nunito Sans:wght@600;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700&display=swap"
-    />
+    <link rel="stylesheet" href="./src/styles/main.css" />
+
+    <!-- Apply the saved theme before first paint to avoid a flash. -->
+    <script>
+      try {
+        var t = localStorage.getItem('yogo-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
   </head>
   <body>
-    <div class="root">
-      <main class="main-bg-color">
-        <div class="main-bg"></div>
-        <div class="side-bar">
-          <div class="side-nv-bg"></div>
-          <div class="active-wrapper">
-            <div class="active"></div>
-          </div>
-          <div class="side-bar-inner">
-            <div class="menu-parent">
-              <img
-                class="menu-icon"
-                loading="lazy"
-                alt=""
-                src="./public/menu@2x.png"
-              />
+    <a class="skip-link" href="#main">Skip to main content</a>
 
-              <div class="element-icon-dashboard-parent">
-                <img
-                  class="element-icon-dashboard"
-                  loading="lazy"
-                  alt=""
-                  src="./public/element--icon--dashboard.svg"
-                />
+    <!-- Icon sprite -->
+    <svg aria-hidden="true" focusable="false" style="display: none">
+      <symbol id="i-dashboard" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="8" height="8" rx="2" />
+        <rect x="13" y="3" width="8" height="8" rx="2" />
+        <rect x="3" y="13" width="8" height="8" rx="2" />
+        <rect x="13" y="13" width="8" height="8" rx="2" />
+      </symbol>
+      <symbol
+        id="i-users"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="9" cy="8" r="4" />
+        <path d="M2 21v-1a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v1" />
+        <path d="M16 3.5a4 4 0 0 1 0 8M22 21v-1a6 6 0 0 0-4-5.6" />
+      </symbol>
+      <symbol
+        id="i-revenue"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+      </symbol>
+      <symbol
+        id="i-inbox"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M21 12h-6l-2 3h-2l-2-3H3" />
+        <path d="M5.5 5h13L21 12v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z" />
+      </symbol>
+      <symbol
+        id="i-calendar"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="3" y="4" width="18" height="17" rx="2" />
+        <path d="M16 2v4M8 2v4M3 10h18" />
+      </symbol>
+      <symbol
+        id="i-file"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <path d="M14 2v6h6M8 13h8M8 17h5" />
+      </symbol>
+      <symbol
+        id="i-settings"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="3" />
+        <path
+          d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"
+        />
+      </symbol>
+      <symbol
+        id="i-logout"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 2v10M18.4 6.6a9 9 0 1 1-12.8 0" />
+      </symbol>
+      <symbol
+        id="i-menu"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <path d="M4 6h16M4 12h16M4 18h10" />
+      </symbol>
+      <symbol
+        id="i-close"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <path d="M6 6l12 12M18 6L6 18" />
+      </symbol>
+      <symbol
+        id="i-sun"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <circle cx="12" cy="12" r="4" />
+        <path
+          d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+        />
+      </symbol>
+      <symbol
+        id="i-moon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+      </symbol>
+      <symbol
+        id="i-system"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="2" y="4" width="20" height="13" rx="2" />
+        <path d="M8 21h8M12 17v4" />
+      </symbol>
+      <symbol
+        id="i-refresh"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M21 12a9 9 0 0 1-15.5 6.3L3 16M3 12a9 9 0 0 1 15.5-6.3L21 8" />
+        <path d="M21 3v5h-5M3 21v-5h5" />
+      </symbol>
+      <symbol
+        id="i-trend-up"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M3 17l6-6 4 4 8-8M15 7h6v6" />
+      </symbol>
+      <symbol
+        id="i-trend-down"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M3 7l6 6 4-4 8 8M15 17h6v-6" />
+      </symbol>
+      <symbol
+        id="i-trend-flat"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.4"
+        stroke-linecap="round"
+      >
+        <path d="M4 12h16" />
+      </symbol>
+      <symbol
+        id="i-alert"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 7v6M12 16.5v.5" />
+      </symbol>
+      <symbol
+        id="i-external"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+      </symbol>
+      <symbol
+        id="i-ngo"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M12 20s-7.5-4.6-9.3-9.2C1.5 7.6 3.6 4 7 4c2 0 3.6 1.2 5 3 1.4-1.8 3-3 5-3 3.4 0 5.5 3.6 4.3 6.8C19.5 15.4 12 20 12 20z"
+        />
+      </symbol>
+      <symbol id="i-ios" viewBox="0 0 43 53">
+        <path
+          d="M31.0887 0.8125C31.753 4.46621 30.3584 7.19625 28.6635 9.17326C27.0005 11.1366 24.7232 13.0408 21.0399 12.7519C20.7942 9.15051 22.191 6.62294 23.8837 4.65049C25.4534 2.81226 28.3314 1.17651 31.0887 0.8125Z"
+        />
+        <path
+          d="M42.2383 38.8408C41.2032 42.0782 39.7267 44.765 37.9249 47.2585C36.28 49.5221 34.2643 52.5684 30.6652 52.5684C27.5552 52.5684 25.4895 50.5687 22.3022 50.5141C18.9306 50.4595 17.0764 52.1862 13.9938 52.6208H12.9427C10.679 52.2931 8.85217 50.5004 7.52127 48.8851C3.59683 44.1121 0.564209 37.9468 0 30.0569V27.7387C0.238879 22.092 2.98257 17.501 6.62946 15.276C8.55414 14.093 11.2 13.0852 14.1462 13.5356C15.4088 13.7313 16.6988 14.1635 17.8295 14.5912C18.901 15.003 20.241 15.7333 21.5105 15.6946C22.3704 15.6696 23.2259 15.2214 24.0926 14.9052C26.6316 13.9883 29.1205 12.9373 32.4011 13.431C36.3437 14.027 39.142 15.7788 40.871 18.4815C37.5358 20.6041 34.8991 23.8029 35.3495 29.2652C35.7499 34.2271 38.6347 37.13 42.2383 38.8408Z"
+        />
+      </symbol>
+      <symbol id="i-android" viewBox="0 0 135 76">
+        <path
+          d="M100.108 23.1186L111.177 3.94473C111.802 2.86983 111.424 1.50441 110.364 0.879802C109.303 0.255206 107.923 0.618336 107.313 1.69324L96.0994 21.1141C87.5437 17.2067 77.9132 15.0278 67.5564 15.0278C57.1996 15.0278 47.569 17.2066 39.0134 21.1141L27.7995 1.69324C27.1749 0.618336 25.8095 0.255206 24.7346 0.879802C23.6597 1.50441 23.2965 2.86983 23.9212 3.94473L34.9897 23.1186C15.903 33.4609 2.97507 52.7801 0.839844 75.3964H134.273C132.138 52.7799 119.21 33.4607 100.108 23.1186ZM36.9217 56.6584C33.8277 56.6584 31.3293 54.1455 31.3293 51.066C31.3293 47.9721 33.8422 45.4736 36.9217 45.4736C40.0156 45.4736 42.5141 47.9866 42.5141 51.066C42.5286 54.1455 40.0156 56.6584 36.9217 56.6584ZM98.1767 56.6584C95.0827 56.6584 92.5843 54.1455 92.5843 51.066C92.5843 47.9721 95.0972 45.4736 98.1767 45.4736C101.271 45.4736 103.769 47.9866 103.769 51.066C103.784 54.1455 101.271 56.6584 98.1767 56.6584Z"
+        />
+      </symbol>
+    </svg>
 
-                <img
-                  class="products-icon"
-                  loading="lazy"
-                  alt=""
-                  src="./public/products.svg"
-                />
-
-                <div class="favorites">
-                  <div class="element-icon-favourites">
-                    <div class="element-icon-favourites1">
-                      <div class="rectangle"></div>
-                      <img
-                        class="path-icon"
-                        loading="lazy"
-                        alt=""
-                        src="./public/path.svg"
-                      />
-                    </div>
-                  </div>
-                  <div class="active1"></div>
-                </div>
-                <img
-                  class="inbox-icon"
-                  loading="lazy"
-                  alt=""
-                  src="./public/inbox@2x.png"
-                />
-
-                <img
-                  class="products-icon"
-                  loading="lazy"
-                  alt=""
-                  src="./public/order-lists.svg"
-                />
-
-                <img
-                  class="products-icon"
-                  loading="lazy"
-                  alt=""
-                  src="./public/product-stock.svg"
-                />
-
-                <img
-                  class="inbox-icon"
-                  loading="lazy"
-                  alt=""
-                  src="./public/file-manager@2x.png"
-                />
-
-                <img class="inbox-icon" alt="" src="./public/calender@2x.png" />
-
-                <div class="favorites">
-                  <div class="active1"></div>
-                  <div class="element-icon-favourites">
-                    <div class="element-icon-favourites1">
-                      <div class="rectangle"></div>
-                      <input class="path" type="checkbox" />
-
-                      <div class="rectangle2"></div>
-                    </div>
-                  </div>
-                </div>
-                <img
-                  class="products-icon"
-                  loading="lazy"
-                  alt=""
-                  src="./public/contact.svg"
-                />
-
-                <img
-                  class="inbox-icon"
-                  loading="lazy"
-                  alt=""
-                  src="./public/invoice@2x.png"
-                />
-
-                <img
-                  class="inbox-icon"
-                  alt=""
-                  src="./public/ui-elements@2x.png"
-                />
-
-                <img
-                  class="products-icon"
-                  loading="lazy"
-                  alt=""
-                  src="./public/profile.svg"
-                />
-
-                <img
-                  class="inbox-icon"
-                  loading="lazy"
-                  alt=""
-                  src="./public/settings@2x.png"
-                />
-              </div>
-              <img
-                class="products-icon"
-                loading="lazy"
-                alt=""
-                src="./public/logout.svg"
-              />
-            </div>
-          </div>
+    <div class="app">
+      <aside class="sidebar" id="sidebar" aria-label="Primary">
+        <div class="sidebar__brand">
           <img
-            class="separator-icon"
-            loading="lazy"
+            class="sidebar__logo"
+            src="./public/apple-touch-icon.png"
             alt=""
-            src="./public/separator.svg"
+            width="36"
+            height="36"
           />
+          <div>
+            <p class="sidebar__name">Yo Go!</p>
+            <p class="sidebar__tagline">Admin console</p>
+          </div>
+          <button
+            class="icon-button sidebar__close"
+            type="button"
+            data-action="close-nav"
+            aria-label="Close navigation"
+          >
+            <svg class="icon" aria-hidden="true"><use href="#i-close" /></svg>
+          </button>
         </div>
-        <section class="navigation-top-bar-2-parent">
-          <header class="navigation-top-bar-2">
-            <img
-              class="navigation-top-bar-2-child"
-              alt=""
-              src="./public/group-3.svg"
-            />
 
-            <div class="dashboard">Dashboard</div>
-            <div class="meet">MEET</div>
-            <div class="top-bar-bg"></div>
-            <div class="meet">MEET</div>
-            <div class="div"></div>
-            <div class="noti">
-              <img class="icon" alt="" />
+        <nav class="nav" aria-label="Main">
+          <ul class="nav__list" role="list">
+            <li>
+              <a class="nav__link" href="./" aria-current="page">
+                <svg class="icon" aria-hidden="true"><use href="#i-dashboard" /></svg>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <span class="nav__link" aria-disabled="true">
+                <svg class="icon" aria-hidden="true"><use href="#i-users" /></svg>
+                <span>Users</span><span class="badge">Soon</span>
+              </span>
+            </li>
+            <li>
+              <span class="nav__link" aria-disabled="true">
+                <svg class="icon" aria-hidden="true"><use href="#i-revenue" /></svg>
+                <span>Revenue</span><span class="badge">Soon</span>
+              </span>
+            </li>
+            <li>
+              <span class="nav__link" aria-disabled="true">
+                <svg class="icon" aria-hidden="true"><use href="#i-inbox" /></svg>
+                <span>Inbox</span><span class="badge">Soon</span>
+              </span>
+            </li>
+            <li>
+              <span class="nav__link" aria-disabled="true">
+                <svg class="icon" aria-hidden="true"><use href="#i-calendar" /></svg>
+                <span>Calendar</span><span class="badge">Soon</span>
+              </span>
+            </li>
+            <li>
+              <span class="nav__link" aria-disabled="true">
+                <svg class="icon" aria-hidden="true"><use href="#i-file" /></svg>
+                <span>Reports</span><span class="badge">Soon</span>
+              </span>
+            </li>
+            <li>
+              <span class="nav__link" aria-disabled="true">
+                <svg class="icon" aria-hidden="true"><use href="#i-settings" /></svg>
+                <span>Settings</span><span class="badge">Soon</span>
+              </span>
+            </li>
+          </ul>
+        </nav>
 
-              <img class="oval-icon" alt="" />
+        <p class="sidebar__footnote">
+          Only the dashboard is built so far. Other sections are placeholders.
+        </p>
+      </aside>
+      <div class="sidebar-backdrop" data-action="close-nav" hidden></div>
 
-              <img class="oval-icon1" alt="" />
-
-              <b class="b">6</b>
-            </div>
-            <div class="dashboard-wrapper">
-              <div class="dashboard1">Dashboard</div>
-            </div>
-            <div class="frame-parent">
-              <div class="man-438081-960-720-parent">
-                <img
-                  class="man-438081-960-720-icon"
-                  alt=""
-                  src="./public/man438081-960-720@2x.png"
-                />
-
-                <div class="frame-wrapper">
-                  <div class="meet-parent">
-                    <a class="meet1"></a>
-                    <div class="admin">CEO</div>
-                  </div>
-                </div>
-              </div>
-              <div class="more-wrapper">
-                <img class="more-icon" alt="" src="./public/more.svg" />
-              </div>
-            </div>
-            <div class="search">
-              <div class="search1">Search</div>
-              <img class="search-icon" alt="" />
-            </div>
-          </header>
-          <div class="stats-container-wrapper">
-            <div class="stats-container">
-              <div class="rectangle-parent">
-                <div class="frame-child"></div>
-                <div class="frame-container">
-                  <div class="monthly-revenue-label-parent">
-                    <div class="monthly-revenue-label">
-                      <div class="mau-parent">
-                        <div class="mau">MAU</div>
-                        <div class="m-a-u">0</div>
-                      </div>
-                      <div class="wau-parent">
-                        <div class="wau">WAU</div>
-                        <div class="w-a-u">0</div>
-                      </div>
-                    </div>
-                    <div class="vector-wrapper">
-                      <img
-                        class="vector-icon"
-                        loading="lazy"
-                        alt=""
-                        src="./public/vector.svg"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="rectangle-group">
-                  <div class="frame-item"></div>
-                  <div class="mau-parent">
-                    <div class="dau">DAU</div>
-                    <div class="d-a-u-spacer-wrapper">
-                      <div class="d-a-u">0</div>
-                    </div>
-                  </div>
-                  <div class="group-wrapper">
-                    <img class="group-icon" alt="" src="./public/group.svg" />
-                  </div>
-                </div>
-              </div>
-              <div class="rectangle-container">
-                <div class="frame-inner"></div>
-                <div class="rectangle-div"></div>
-                <div class="frame-container">
-                  <div class="monthly-revenue-label-parent">
-                    <div class="weekly-revenue-label-parent">
-                      <div class="mau-parent">
-                        <a class="mau1"></a>
-                        <div class="weekly-m-a">0</div>
-                      </div>
-                      <div class="wau-group">
-                        <div class="wau1">WAU</div>
-                        <div class="weekly-w-a">0</div>
-                      </div>
-                    </div>
-                    <div class="vector-wrapper">
-                      <img
-                        class="vector-icon"
-                        alt=""
-                        src="./public/group-1.svg"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="vector-parent">
-                  <img
-                    class="rectangle-icon"
-                    loading="lazy"
-                    alt=""
-                    src="./public/rectangle-39425.svg"
-                  />
-
-                  <img
-                    class="frame-child1"
-                    alt=""
-                    src="./public/rectangle-39427.svg"
-                  />
-
-                  <div class="rectangle-parent1">
-                    <div class="frame-child2"></div>
-                    <div class="frame-wrapper1">
-                      <div class="mau-parent">
-                        <div class="dau">DAU</div>
-                        <div class="d-a-u-spacer-wrapper">
-                          <div class="d-a-u1">0</div>
-                        </div>
-                      </div>
-                    </div>
-                    <img
-                      class="group-icon2"
-                      alt=""
-                      src="./public/group-2.svg"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="group-div">
-                <div class="frame-child3"></div>
-                <div class="frame-child3"></div>
-                <div class="frame-wrapper2">
-                  <div class="mau-parent">
-                    <div class="monthly-revenue">Monthly Revenue</div>
-                    <div class="div1">$0</div>
-                  </div>
-                </div>
-                <div class="frame-wrapper3">
-                  <div class="frame-parent1">
-                    <div class="weekly-revenue-parent">
-                      <div class="weekly-revenue">Weekly Revenue</div>
-                      <div class="today-revenue-spacer">$0</div>
-                    </div>
-                    <div class="wau-group">
-                      <div class="todays-revenue">Today’s Revenue</div>
-                      <div class="today-revenue-spacer">$0</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="rectangle-parent2">
-                  <div class="frame-child2"></div>
-                  <b class="total-1030">Total= $1030</b>
-                </div>
-              </div>
+      <div class="shell">
+        <header class="topbar">
+          <button
+            class="icon-button topbar__menu"
+            type="button"
+            data-action="open-nav"
+            aria-label="Open navigation"
+            aria-controls="sidebar"
+            aria-expanded="false"
+          >
+            <svg class="icon" aria-hidden="true"><use href="#i-menu" /></svg>
+          </button>
+          <div class="topbar__title">
+            <h1>Dashboard</h1>
+            <p class="topbar__meta" id="data-meta">Loading data…</p>
+          </div>
+          <div class="topbar__actions">
+            <button class="button button--ghost" type="button" data-action="refresh">
+              <svg class="icon" aria-hidden="true"><use href="#i-refresh" /></svg>
+              <span class="button__label">Refresh</span>
+            </button>
+            <button
+              class="icon-button"
+              type="button"
+              data-action="toggle-theme"
+              aria-label="Theme: system"
+            >
+              <svg class="icon" aria-hidden="true"><use href="#i-system" /></svg>
+            </button>
+            <div class="profile">
+              <span class="profile__avatar" aria-hidden="true">AD</span>
+              <span class="profile__text">
+                <span class="visually-hidden">Signed in as </span>
+                <span class="profile__name">Admin</span>
+                <span class="profile__role"><span class="visually-hidden">, </span>CEO</span>
+              </span>
             </div>
           </div>
-          <div class="frame-wrapper4">
-            <div class="total-users-container-parent">
-              <div class="total-users-container">
-                <div class="total-users">
-                  <div class="bg"></div>
-                  <div class="frame-parent2">
-                    <div class="total-user-parent">
-                      <div class="total-user">Total Users</div>
-                      <b class="total-users-percent">0</b>
-                    </div>
-                    <img class="icon1" alt="" src="./public/icon-1@2x.png" />
-                  </div>
-                  <div class="ic-trending-up-24px-parent">
-                    <img
-                      class="ic-trending-up-24px-icon"
-                      loading="lazy"
-                      alt=""
-                      src="./public/ictrendingup24px.svg"
-                    />
+        </header>
 
-                    <div class="up-from-yesterd-wrapper">
-                      <div class="up-from-yesterd-container">
-                        <span>0%</span>
-                        <span class="span"> </span>
-                        <span class="up-from-yesterday">Up from yesterday</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="total-order-parent">
-                  <div class="total-order">
-                    <div class="bg"></div>
-                    <div class="frame-parent2">
-                      <div class="total-user-parent">
-                        <div class="total-order1">Total Ad-Revenue</div>
-                        <b class="total-users-percent">$0</b>
-                      </div>
-                      <img class="icon1" alt="" src="./public/icon-2@2x.png" />
-                    </div>
-                    <div class="ic-trending-up-24px-group">
-                      <img
-                        class="ic-trending-up-24px-icon"
-                        alt=""
-                        src="./public/ictrendingup24px-1.svg"
-                      />
-
-                      <div class="up-from-yesterd-wrapper">
-                        <div class="up-from-yesterd-container">
-                          <span>0%</span>
-                          <span class="span"> </span>
-                          <span class="up-from-yesterday"
-                            >Up from past week</span
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="total-order">
-                    <div class="bg"></div>
-                    <div class="frame-parent2">
-                      <div class="total-sales-parent">
-                        <div class="total-sales1">NGO</div>
-                        <b class="total-users-percent">$0</b>
-                      </div>
-                      <img class="icon1" alt="" src="./public/icon-3@2x.png" />
-                    </div>
-                    <div class="ic-trending-down-24px-parent">
-                      <img
-                        class="ic-trending-up-24px-icon"
-                        loading="lazy"
-                        alt=""
-                        src="./public/ictrendingdown24px.svg"
-                      />
-
-                      <div class="up-from-yesterd-wrapper">
-                        <div class="up-from-yesterd-container">
-                          <span>0%</span>
-                          <span class="span"> </span>
-                          <span class="up-from-yesterday"
-                            >Down from yesterday</span
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="total-sales-container">
-                  <div class="total-sales-group">
-                    <img
-                      class="total-sales-icon"
-                      alt=""
-                      src="./public/total-sales.svg"
-                    />
-
-                    <img
-                      class="frame-icon"
-                      loading="lazy"
-                      alt=""
-                      src="./public/frame-480871.svg"
-                    />
-                  </div>
-                  <div class="total-sales-parent1">
-                    <img
-                      class="total-sales-icon1"
-                      alt=""
-                      src="./public/total-sales-1.svg"
-                    />
-
-                    <div class="sales-info-wrapper">
-                      <div class="sales-info">
-                        <div class="total-sales2">
-                          <div class="bg3"></div>
-                        </div>
-                        <img
-                          class="sales-info-child"
-                          loading="lazy"
-                          alt=""
-                          src="./public/rectangle-219.svg"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <main id="main" class="main" tabindex="-1">
+          <div id="dashboard" class="dashboard" aria-live="polite" aria-busy="true">
+            <!-- Rendered by src/js/main.js. Shown until the script runs. -->
+            <noscript>
+              <div class="state state--error">
+                <p class="state__title">JavaScript is required</p>
+                <p>Enable JavaScript to load the dashboard data.</p>
               </div>
-              <div class="sales-growth">
-                <div class="growth-chart">
-                  <img
-                    class="growth-chart-child"
-                    loading="lazy"
-                    alt=""
-                    src="./public/group-1000001314.svg"
-                  />
-                </div>
-                <div class="weekly-growth-container">
-                  <div class="weekly-sales-info-wrapper">
-                    <div class="weekly-sales-info">
-                      <div class="total-sales3">
-                        <div class="bg4"></div>
-                      </div>
-                      <img
-                        class="weekly-sales-chart"
-                        alt=""
-                        src="./public/vector-1.svg"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <img
-                  class="total-sales-icon2"
-                  alt=""
-                  src="./public/total-sales-2.svg"
-                />
-              </div>
-            </div>
+            </noscript>
           </div>
-        </section>
-      </main>
-      <div class="account-balance">Account Balance</div>
-      <div class="root-child"></div>
+        </main>
+
+        <footer class="footer">
+          <p>Yo Go! Admin · Figures shown are demo data unless a data source is configured.</p>
+        </footer>
+      </div>
     </div>
+
+    <script type="module" src="./src/js/main.js"></script>
   </body>
 </html>

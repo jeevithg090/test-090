@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-11-14T09:00:00Z",
+  "currency": "USD",
+  "platforms": [
+    { "id": "ios", "name": "iOS", "mau": 18420, "wau": 7310, "dau": 2465 },
+    { "id": "android", "name": "Android", "mau": 26890, "wau": 11240, "dau": 3980 }
+  ],
+  "revenue": {
+    "monthly": 4820.5,
+    "weekly": 1130.25,
+    "today": 164.8,
+    "lifetime": 38215.9
+  },
+  "kpis": [
+    {
+      "id": "total-users",
+      "label": "Total users",
+      "format": "number",
+      "value": 45310,
+      "previous": 44890,
+      "comparedTo": "yesterday"
+    },
+    {
+      "id": "ad-revenue",
+      "label": "Total ad revenue",
+      "format": "currency",
+      "value": 2960.4,
+      "previous": 2715.1,
+      "comparedTo": "past week"
+    },
+    {
+      "id": "ngo",
+      "label": "NGO contributions",
+      "format": "currency",
+      "value": 610,
+      "previous": 655,
+      "comparedTo": "yesterday"
+    }
+  ],
+  "integrations": [
+    {
+      "id": "firebase",
+      "name": "Firebase",
+      "description": "Analytics, auth and crash reporting",
+      "url": "https://console.firebase.google.com/"
+    },
+    {
+      "id": "admob",
+      "name": "AdMob",
+      "description": "In-app advertising revenue",
+      "url": "https://admob.google.com/"
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "description": "Source code and releases",
+      "url": "https://github.com/"
+    }
+  ]
+}
