@@ -1,21 +1,29 @@
+# Dependencies
+node_modules/
 
-# OS generated files
-.DS_Store # macOS folder settings
-Thumbs.db # Windows image file cache
-Desktop.ini # Windows desktop icon settings
+# Build output & caches
+build/
+dist/
+.parcel-cache/
+coverage/
+*.tsbuildinfo
 
-# Editor directories and files
-.vscode/   # Visual Studio Code settings
-.idea/   # IntelliJ IDEA settings
-*.swp   # Vim swap files
-*.swo   # Vim swap files
-*.swn   # Vim swap files
+# Environment (keep .env.example)
+.env
+.env.*
+!.env.example
 
-# Temporary or cache files
-*.tmp   # Temporary files
-*.temp  # Temporary files
-*.cache   # Cache files
-*.bak   # Backup files
+# Logs
+*.log
+npm-debug.log*
 
-# Others
-*.log   # Log files
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
