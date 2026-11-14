@@ -1,0 +1,7 @@
+build/
+dist/
+.parcel-cache/
+node_modules/
+package-lock.json
+public/
+docs/screenshots/
